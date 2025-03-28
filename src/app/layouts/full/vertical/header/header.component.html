@@ -16,7 +16,8 @@
     <button
       mat-icon-button
       (click)="toggleMobileNav.emit()"
-      class="d-flex justify-content-center"
+      class="d-flex justify-content-center
+  "
     >
       <i-tabler name="menu-2" class="icon-20 d-flex"></i-tabler>
     </button>
@@ -44,8 +45,6 @@
       aria-label="Notifications"
     >
       <div class="d-flex align-items-center">
-        Apps
-        <i-tabler name="chevron-down" class="icon-16 m-l-4"></i-tabler>
       </div>
     </button>
     <mat-menu #appsmenu="matMenu" class="apps-dd cardWithShadow">
@@ -150,13 +149,12 @@
     }
   </mat-menu>
 
-  @if (options.theme == 'light') {
-    <button mat-icon-button aria-label="lightdark" class="d-flex justify-content-center" (click)="setlightDark('dark')">
+  @if(options.theme=='light'){
+    <button mat-icon-button aria-label="lightdark" class="d-flex justify-content-center" (click)="setlightDark('dark')" >
       <i-tabler class="d-flex icon-22" [name]="'moon'"></i-tabler>
     </button>
-  } @else {
-    <button mat-icon-button aria-label="lightdark" class="d-flex justify-content-center"
-            (click)="setlightDark('light')">
+  }@else{
+    <button mat-icon-button aria-label="lightdark" class="d-flex justify-content-center" (click)="setlightDark('light')">
       <i-tabler class="d-flex icon-22" [name]="'sun'"></i-tabler>
     </button>
   }
@@ -233,11 +231,8 @@
             width="95"
           />
           <div class="m-l-16">
-            <h6 class="f-s-14 f-w-600 m-0 ">{{ user.email }}</h6>
-            <span class="f-s-14 d-block m-b-4">{{ user.role }}</span>
             <span class="d-flex align-items-center">
               <i-tabler name="mail" class="icon-15 m-r-4"></i-tabler>
-              {{ user.phone }}
             </span>
           </div>
         </div>
@@ -269,6 +264,9 @@
         }
       </div>
       <div class="p-y-12 p-x-32">
+          mat-stroked-button
+          color="primary"
+          class="w-100"
         <button
           (click)="logout()"
           mat-stroked-button

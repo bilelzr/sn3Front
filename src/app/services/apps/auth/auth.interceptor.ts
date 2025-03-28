@@ -3,27 +3,35 @@ import { Injectable } from "@angular/core";
 import { AuthService } from "./auth.service";
 import { catchError, Observable, switchMap, throwError } from "rxjs";
 import { Router } from "@angular/router";
-
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService, private router: Router) {}
 
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (request.url.includes('/signin') || request.url.includes('/login')) {
-      return next.handle(request); // Skip the interceptor for sign-in/login requests
+  intercept(
+    request: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
+    console.log('Interceptor executed');
+
+    // Check if the request method is OPTIONS (preflight request)
+    if (request.method === 'OPTIONS') {
+      // Modify the headers for the OPTIONS request here
+      request = request.clone({
+        setHeaders: {
+          'Authorization': `Bearer ${this.authService.getToken()}`, // Add Authorization or any other header
+          'Custom-Header': 'YourCustomHeaderValue',  // Add any custom headers for OPTIONS requests
+        }
+      });
     }
 
-    // Get the token from AuthService
     return this.authService.getToken().pipe(
       switchMap((token) => {
-        if (token) {
-          // Clone the request and add the Authorization header
+        if (token && request.method !== 'OPTIONS') {
           request = request.clone({
             setHeaders: {
               Authorization: `Bearer ${token}`,
             },
           });
-          console.log("Authorization header added", request);  // Check if the header is added here
         }
         return next.handle(request).pipe(
           catchError((error) => {
@@ -37,11 +45,13 @@ export class AuthInterceptor implements HttpInterceptor {
     );
   }
 
-  private handleAuthError(request: HttpRequest<any>, next: HttpHandler): Observable<any> {
-    // If the token is expired or invalid, redirect to the sign-in page
+  private handleAuthError(
+    request: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<any> {
     console.error('Unauthenticated request. Redirecting to sign-in page.');
-    this.authService.logout(); // Log the user out
-    this.router.navigate(['/signin']); // Navigate to sign-in page
+    this.authService.logout();
+    this.router.navigate(['/']);
     return throwError('Unauthenticated request. Redirecting to sign-in page.');
   }
 }
