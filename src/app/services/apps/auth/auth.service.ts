@@ -2,6 +2,7 @@ import {Injectable} from "@angular/core";
 import {HttpClient} from '@angular/common/http';
 import {Observable,of} from "rxjs";
 import {AuthenticationResponse} from "../../models/authenticationResponse";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class AuthService {
   private tokenKey = 'token';
 
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
 
   }
 
@@ -34,6 +35,7 @@ export class AuthService {
   logout(): void {
     sessionStorage.removeItem('userRole'); // Remove the token from local storage
     sessionStorage.removeItem('userEmail'); // Remove the token from local storage
+    this.router.navigate(['/authentication/login']);
   }
 
 }

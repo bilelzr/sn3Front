@@ -1,21 +1,19 @@
-import {
-  Component,
-  Output,
-  EventEmitter,
-  Input,
-  ViewEncapsulation,
-} from '@angular/core';
-import { CoreService } from 'src/app/services/core.service';
-import { MatDialog } from '@angular/material/dialog';
-import { navItems } from '../sidebar/sidebar-data';
-import { TranslateService } from '@ngx-translate/core';
-import { TablerIconsModule } from 'angular-tabler-icons';
-import { MaterialModule } from 'src/app/material.module';
-import { RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { NgScrollbarModule } from 'ngx-scrollbar';
-import { AppSettings } from 'src/app/config';
+import {Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation,} from '@angular/core';
+import {CoreService} from 'src/app/services/core.service';
+import {MatDialog} from '@angular/material/dialog';
+import {navItems} from '../sidebar/sidebar-data';
+import {TranslateService} from '@ngx-translate/core';
+import {TablerIconsModule} from 'angular-tabler-icons';
+import {MaterialModule} from 'src/app/material.module';
+import {Router, RouterModule} from '@angular/router';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {NgScrollbarModule} from 'ngx-scrollbar';
+import {AppSettings} from 'src/app/config';
+import {UserService} from "../../../../services/apps/user/user.service";
+import {User} from "../../../../services/models/user";
+import * as console from "node:console";
+import {AuthService} from "../../../../services/apps/auth/auth.service";
 
 interface notifications {
   id: number;
@@ -47,24 +45,24 @@ interface quicklinks {
 }
 
 @Component({
-    selector: 'app-header',
-    imports: [
-        RouterModule,
-        CommonModule,
-        NgScrollbarModule,
-        TablerIconsModule,
-        MaterialModule,
-    ],
-    templateUrl: './header.component.html',
-    encapsulation: ViewEncapsulation.None
+  selector: 'app-header',
+  imports: [
+    RouterModule,
+    CommonModule,
+    NgScrollbarModule,
+    TablerIconsModule,
+    MaterialModule,
+  ],
+  templateUrl: './header.component.html',
+  encapsulation: ViewEncapsulation.None
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   @Input() showToggle = true;
   @Input() toggleChecked = false;
   @Output() toggleMobileNav = new EventEmitter<void>();
   @Output() toggleMobileFilterNav = new EventEmitter<void>();
   @Output() toggleCollapsed = new EventEmitter<void>();
-
+  user: User = {}
   showFiller = false;
 
   public selectedLanguage: any = {
@@ -100,9 +98,13 @@ export class HeaderComponent {
 
   @Output() optionsChange = new EventEmitter<AppSettings>();
 
+
   constructor(
     private settings: CoreService,
+    private userService: UserService,
     private vsidenav: CoreService,
+    private authService: AuthService,
+    private router : Router,
     public dialog: MatDialog,
     private translate: TranslateService
   ) {
@@ -110,6 +112,29 @@ export class HeaderComponent {
   }
 
   options = this.settings.getOptions();
+
+  private async loadUser() {
+    const userEmail = sessionStorage.getItem('userEmail');
+    if (userEmail) {
+      this.userService.getUserByEmail(userEmail).subscribe(
+        (user: User) => {
+          // Assign the returned user data to the `user` property
+          this.user = user;
+        },
+        (error) => {
+          console.error('Error loading user:', error);
+          // Handle the error, e.g., show an error message to the user
+        }
+      );
+    }
+  }
+
+  logout() {
+    this.authService.logout();
+    // Add any logout logic here if needed
+
+  }
+
 
   openDialog() {
     const dialogRef = this.dialog.open(AppSearchDialogComponent);
@@ -291,12 +316,16 @@ export class HeaderComponent {
       link: '/theme-pages/treeview',
     },
   ];
+
+  ngOnInit(): void {
+    this.loadUser();
+  }
 }
 
 @Component({
-    selector: 'search-dialog',
-    imports: [RouterModule, MaterialModule, TablerIconsModule, FormsModule],
-    templateUrl: 'search-dialog.component.html'
+  selector: 'search-dialog',
+  imports: [RouterModule, MaterialModule, TablerIconsModule, FormsModule],
+  templateUrl: 'search-dialog.component.html'
 })
 export class AppSearchDialogComponent {
   searchText: string = '';

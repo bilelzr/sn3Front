@@ -1,25 +1,25 @@
 <mat-toolbar class="topbar">
   <!-- --------------------------------------------------------------- -->
   <!-- Desktop Menu -->
-  @if(showToggle) {
-  <button
-    mat-icon-button
-    (click)="toggleCollapsed.emit()"
-    class="d-flex justify-content-center"
-  >
-    <i-tabler name="menu-2" class="icon-20 d-flex"></i-tabler>
-  </button>
+  @if (showToggle) {
+    <button
+      mat-icon-button
+      (click)="toggleCollapsed.emit()"
+      class="d-flex justify-content-center"
+    >
+      <i-tabler name="menu-2" class="icon-20 d-flex"></i-tabler>
+    </button>
   }
 
   <!-- Mobile Menu -->
-  @if(!showToggle) {
-  <button
-    mat-icon-button
-    (click)="toggleMobileNav.emit()"
-    class="d-flex justify-content-center"
-  >
-    <i-tabler name="menu-2" class="icon-20 d-flex"></i-tabler>
-  </button>
+  @if (!showToggle) {
+    <button
+      mat-icon-button
+      (click)="toggleMobileNav.emit()"
+      class="d-flex justify-content-center"
+    >
+      <i-tabler name="menu-2" class="icon-20 d-flex"></i-tabler>
+    </button>
   }
   <!-- --------------------------------------------------------------- -->
 
@@ -44,7 +44,8 @@
       aria-label="Notifications"
     >
       <div class="d-flex align-items-center">
-        Apps <i-tabler name="chevron-down" class="icon-16 m-l-4"></i-tabler>
+        Apps
+        <i-tabler name="chevron-down" class="icon-16 m-l-4"></i-tabler>
       </div>
     </button>
     <mat-menu #appsmenu="matMenu" class="apps-dd cardWithShadow">
@@ -52,28 +53,28 @@
         <div class="col-sm-8 b-r-1 p-r-0">
           <div class="p-32 p-b-0">
             <div class="row">
-              @for(appdd of apps; track appdd.title) {
-              <div class="col-sm-6 text-hover-primary">
-                <a
-                  [routerLink]="[appdd.link]"
-                  class="d-flex align-items-center text-decoration-none m-b-24"
-                >
+              @for (appdd of apps; track appdd.title) {
+                <div class="col-sm-6 text-hover-primary">
+                  <a
+                    [routerLink]="[appdd.link]"
+                    class="d-flex align-items-center text-decoration-none m-b-24"
+                  >
                   <span
                     class="text-primary bg-light rounded icon-40 d-flex align-items-center justify-content-center"
                   >
-                    <img [src]="appdd.img" width="20" />
+                    <img [src]="appdd.img" width="20"/>
                   </span>
 
-                  <div class="m-l-16">
-                    <h5
-                      class="f-s-14 f-w-600 m-0 textprimary  hover-text"
-                    >
-                      {{ appdd.title }}
-                    </h5>
-                    <span class="f-s-12 text-body">{{ appdd.subtitle }}</span>
-                  </div>
-                </a>
-              </div>
+                    <div class="m-l-16">
+                      <h5
+                        class="f-s-14 f-w-600 m-0 textprimary  hover-text"
+                      >
+                        {{ appdd.title }}
+                      </h5>
+                      <span class="f-s-12 text-body">{{ appdd.subtitle }}</span>
+                    </div>
+                  </a>
+                </div>
               }
             </div>
           </div>
@@ -90,21 +91,21 @@
               [routerLink]="['/theme-pages/faq']"
               mat-flat-button
               color="primary"
-              >Check</a
+            >Check</a
             >
           </div>
         </div>
         <div class="col-sm-4">
           <div class="p-x-16 p-y-32">
             <h4 class="f-s-18 f-w-600  m-b-16">Quick Links</h4>
-            @for(quicklink of quicklinks; track quicklink.title) {
-            <div class="text-hover-primary">
-              <a
-                [routerLink]="[quicklink.link]"
-                class="hover-text text-decoration-none f-s-14 f-w-600 d-block p-y-8"
+            @for (quicklink of quicklinks; track quicklink.title) {
+              <div class="text-hover-primary">
+                <a
+                  [routerLink]="[quicklink.link]"
+                  class="hover-text text-decoration-none f-s-14 f-w-600 d-block p-y-8"
                 >{{ quicklink.title }}</a
-              >
-            </div>
+                >
+              </div>
             }
           </div>
         </div>
@@ -136,25 +137,26 @@
     />
   </button>
   <mat-menu #flags="matMenu" class="cardWithShadow">
-    @for(lang of languages; track lang.icon) {
-    <button mat-menu-item (click)="changeLanguage(lang)">
-      <div class="d-flex align-items-center">
-        <img
-          [src]="lang.icon"
-          class="rounded-circle object-cover m-r-8 icon-20"
-        />
-        <span class=" f-s-14">{{ lang.language }}</span>
-      </div>
-    </button>
+    @for (lang of languages; track lang.icon) {
+      <button mat-menu-item (click)="changeLanguage(lang)">
+        <div class="d-flex align-items-center">
+          <img
+            [src]="lang.icon"
+            class="rounded-circle object-cover m-r-8 icon-20"
+          />
+          <span class=" f-s-14">{{ lang.language }}</span>
+        </div>
+      </button>
     }
   </mat-menu>
 
-  @if(options.theme=='light'){
-    <button mat-icon-button aria-label="lightdark" class="d-flex justify-content-center" (click)="setlightDark('dark')" >
+  @if (options.theme == 'light') {
+    <button mat-icon-button aria-label="lightdark" class="d-flex justify-content-center" (click)="setlightDark('dark')">
       <i-tabler class="d-flex icon-22" [name]="'moon'"></i-tabler>
     </button>
-    }@else{
-    <button mat-icon-button aria-label="lightdark" class="d-flex justify-content-center" (click)="setlightDark('light')">
+  } @else {
+    <button mat-icon-button aria-label="lightdark" class="d-flex justify-content-center"
+            (click)="setlightDark('light')">
       <i-tabler class="d-flex icon-22" [name]="'sun'"></i-tabler>
     </button>
   }
@@ -179,23 +181,23 @@
       <h6 class="f-s-16 f-w-600 m-0 ">Notifications</h6>
       <span class="m-l-auto">
         <span class="bg-primary text-white p-x-8 p-y-4 f-w-500 rounded f-s-12"
-          >5 new</span
+        >5 new</span
         >
       </span>
     </div>
 
-    @for(notification of notifications; track notification.title) {
-    <button mat-menu-item class="p-x-32 p-y-16">
-      <div class="d-flex align-items-center">
-        <img [src]="notification.img" class="rounded-circle" width="48" />
-        <div class="m-l-16">
-          <h5 class="f-s-14 f-w-600 m-0 ">
-            {{ notification.title }}
-          </h5>
-          <span>{{ notification.subtitle }}</span>
+    @for (notification of notifications; track notification.title) {
+      <button mat-menu-item class="p-x-32 p-y-16">
+        <div class="d-flex align-items-center">
+          <img [src]="notification.img" class="rounded-circle" width="48"/>
+          <div class="m-l-16">
+            <h5 class="f-s-14 f-w-600 m-0 ">
+              {{ notification.title }}
+            </h5>
+            <span>{{ notification.subtitle }}</span>
+          </div>
         </div>
-      </div>
-    </button>
+      </button>
     }
 
     <div class="p-y-12 p-x-32">
@@ -231,72 +233,50 @@
             width="95"
           />
           <div class="m-l-16">
-            <h6 class="f-s-14 f-w-600 m-0 ">Mathew Anderson</h6>
-            <span class="f-s-14 d-block m-b-4">Designer</span>
+            <h6 class="f-s-14 f-w-600 m-0 ">{{ user.email }}</h6>
+            <span class="f-s-14 d-block m-b-4">{{ user.role }}</span>
             <span class="d-flex align-items-center">
               <i-tabler name="mail" class="icon-15 m-r-4"></i-tabler>
-              info&#64;modernize.com
+              {{ user.phone }}
             </span>
           </div>
         </div>
       </div>
       <div class="p-x-32">
-        @for(profile of profiledd; track profile.title) {
-        <a
-          class="p-y-16 text-decoration-none d-block text-hover-primary"
-          [routerLink]="[profile.link]"
-        >
-          <div class="d-flex align-items-center">
-            <button
-              mat-mini-fab
-              class="text-primary bg-light shadow-none rounded"
-            >
-              <img [src]="profile.img" width="20" />
-            </button>
-
-            <div class="m-l-16">
-              <h5
-                class="f-s-14 f-w-600 m-0 textprimary  hover-text"
+        @for (profile of profiledd; track profile.title) {
+          <a
+            class="p-y-16 text-decoration-none d-block text-hover-primary"
+            [routerLink]="[profile.link]"
+          >
+            <div class="d-flex align-items-center">
+              <button
+                mat-mini-fab
+                class="text-primary bg-light shadow-none rounded"
               >
-                {{ profile.title }}
-              </h5>
-              <span class="f-s-14 text-body">{{ profile.subtitle }}</span>
+                <img [src]="profile.img" width="20"/>
+              </button>
+
+              <div class="m-l-16">
+                <h5
+                  class="f-s-14 f-w-600 m-0 textprimary  hover-text"
+                >
+                  {{ profile.title }}
+                </h5>
+                <span class="f-s-14 text-body">{{ profile.subtitle }}</span>
+              </div>
             </div>
-          </div>
-        </a>
+          </a>
         }
-
-        <!-- upgrade -->
-        <div
-          class="p-24 overflow-hidden bg-light-primary rounded position-relative m-y-16"
-        >
-          <div class="d-flex align-items-center">
-            <div>
-              <h5 class="f-s-18 m-0 f-w-600 m-b-12 ">
-                Unlimited <br />
-                Access
-              </h5>
-              <button mat-flat-button color="primary">Upgrade</button>
-            </div>
-            <div class="m-l-auto">
-              <img
-                src="/assets/images/backgrounds/unlimited-bg.png"
-                alt="upgrade-bg"
-                class="upgrade-bg"
-              />
-            </div>
-          </div>
-        </div>
       </div>
-
       <div class="p-y-12 p-x-32">
-        <a
-          [routerLink]="['/authentication/login']"
+        <button
+          (click)="logout()"
           mat-stroked-button
           color="primary"
           class="w-100"
-          >Logout</a
         >
+          Logout
+        </button>
       </div>
     </ng-scrollbar>
   </mat-menu>
