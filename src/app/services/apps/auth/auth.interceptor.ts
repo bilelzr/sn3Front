@@ -11,7 +11,6 @@ export class AuthInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    console.log('Interceptor executed');
     return this.authService.getToken().pipe(
       switchMap((token) => {
         if (token) {

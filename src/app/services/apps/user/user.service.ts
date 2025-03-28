@@ -21,4 +21,21 @@ export class UserService {
   findAllUsers(): Observable<User[]> {
     return this.http.get<User[]>(`${this.backendUrl}/all`);
   }
+
+  createUser(newUser: User): Observable<User> {
+    return this.http.post<User>(`${this.backendUrl}/add`, newUser);
+  }
+
+  deleteUser(uuid: string): Observable<any> {
+    console.log("delete method")
+    return this.http.delete<any>(`${this.backendUrl}/delete/` + uuid);
+  }
+
+  lockUserAccount(email: string): Observable<any> {
+    return this.http.put<any>(`${this.backendUrl}/lockAccount/` + email, null);
+  }
+
+  unLockUserAccount(email: string): Observable<any> {
+    return this.http.put<any>(`${this.backendUrl}/unLockAccount/` + email, null);
+  }
 }

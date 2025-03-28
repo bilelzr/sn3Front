@@ -5,7 +5,7 @@
         <mat-form-field appearance="outline" class="w-100 hide-hint">
           <input
             matInput
-            placeholder="Search Employee"
+            placeholder="Search User"
             (keyup)="applyFilter($any($event.target).value)"
           />
           <mat-icon matSuffix>
@@ -16,7 +16,7 @@
       <div class="col-lg-4 d-flex align-items-center justify-content-end">
         <!-- add employee -->
         <button mat-flat-button (click)="openDialog('Add', {})" color="primary">
-          Add Employee
+          Add User
         </button>
       </div>
     </div>
@@ -103,8 +103,10 @@
             <a
               (click)="openDialog('Update', element)"
               class="m-r-10 cursor-pointer"
-              ><i-tabler name="edit" class="icon-18"></i-tabler
-            ></a>
+            >
+              <i-tabler name="edit" class="icon-18"></i-tabler
+              >
+            </a>
             <a
               (click)="openDialog('Delete', element)"
               class="cursor-pointer"

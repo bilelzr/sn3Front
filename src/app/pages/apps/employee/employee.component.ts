@@ -23,6 +23,7 @@ import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {UserService} from "../../../services/apps/user/user.service";
 import {User} from "../../../services/models/user";
+import {Observable} from "rxjs";
 @Component({
   selector: 'app-employee',
   templateUrl: './employee.component.html',
@@ -70,11 +71,9 @@ export class AppEmployeeComponent implements AfterViewInit,OnInit {
   loadAllUsers(): void {
     this.userService.findAllUsers().subscribe(
       (response: User[]) => {
-        console.log("Response from API:", response); // ✅ Log AFTER data is fetched
         this.users = response;
         this.dataSource.data = this.users; // ✅ Correct way to update MatTableDataSource
         this.dataSource = new MatTableDataSource(this.users); // ✅ Ensuring table update
-        console.log(this.users);
       },
       (error) => {
         console.error("Error fetching users:", error);
@@ -106,9 +105,9 @@ export class AppEmployeeComponent implements AfterViewInit,OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  openDialog(action: string, employee: Employee | any): void {
-    const dialogRef = this.dialog.open(AppEmployeeDialogContentComponent, {
-      data: { action, employee }, autoFocus: false
+  openDialog(action: string, user: User | any): void {
+    const dialogRef = this.dialog.open(AppUserDialogContentComponent, {
+      data: { action, user }, autoFocus: false
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -139,30 +138,31 @@ interface DialogData {
   templateUrl: 'employee-dialog-content.html',
 })
 // tslint:disable-next-line: component-class-suffix
-export class AppEmployeeDialogContentComponent {
+export class AppUserDialogContentComponent {
   action: string | any;
   // tslint:disable-next-line - Disables all
-  local_data: User;
+  user: User;
   selectedImage: any = '';
   joiningDate = new FormControl();
 
   constructor(
     public dialog: MatDialog,
-    public dialogRef: MatDialogRef<AppEmployeeDialogContentComponent>,
+    public dialogRef: MatDialogRef<AppUserDialogContentComponent>,
     private employeeService: EmployeeService,
+    private userService : UserService,
     private snackBar: MatSnackBar,
 
     // @Optional() is used to prevent error if no data is passed
     @Optional() @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {
     this.action = data.action;
-    this.local_data = { ...data.user };
+    this.user = { ...data.user };
 
     this.joiningDate = new FormControl();
 
-    if (this.local_data.DateOfJoining) {
+    if (this.user.DateOfJoining) {
       this.joiningDate.setValue(
-        new Date(this.local_data.DateOfJoining).toISOString().split('T')[0]
+        new Date(this.user.DateOfJoining).toISOString().split('T')[0]
       ); //  existing date
     } else {
       // Set to today's date if no existing date is available
@@ -176,27 +176,54 @@ export class AppEmployeeDialogContentComponent {
   }
 
   doAction(): void {
-    this.local_data.DateOfJoining = this.joiningDate.value;
+    this.user.DateOfJoining = this.joiningDate.value;
 
-/*    if (this.action === 'Add') {
-      this.employeeService.addEmployee(this.local_data);
-      this.dialogRef.close();
-      // Open success dialog
-      const successDialogRef = this.dialog.open(AppAddEmployeeComponent);
-      successDialogRef.afterClosed().subscribe(() => {
-        this.dialogRef.close({ event: 'Refresh' });
-        this.openSnackBar('Employee Added successfully!', 'Close');
-      });
-    } else if (this.action === 'Update') {
-      this.employeeService.updateEmployee(this.local_data);
+    if (this.action === 'Add') {
+      console.log(this.user)
+      this.saveUser(this.user).subscribe(
+        (createdUser: User) => {
+          console.log("User created successfully:", createdUser);
+          // Close the dialog only after user creation
+          this.dialogRef.close();
+          // Open success dialog
+          const successDialogRef = this.dialog.open(AppAddEmployeeComponent);
+          successDialogRef.afterClosed().subscribe(() => {
+            this.dialogRef.close({ event: 'Refresh' });
+            this.openSnackBar('Employee Added successfully!', 'Close');
+          });
+        },
+        (error: any) => {
+          console.error("Error creating user:", error);
+          this.openSnackBar('Failed to add employee!', 'Close');
+        }
+      );
+
+    } /*else if (this.action === 'Update') {
+      this.employeeService.updateEmployee(this.user);
       this.dialogRef.close({ event: 'Update' });
       this.openSnackBar('Employee Updated successfully!', 'Close');
-    } else if (this.action === 'Delete') {
-      this.employeeService.deleteEmployee(this.local_data.id);
-      this.dialogRef.close({ event: 'Delete' });
-      this.openSnackBar('Employee Deleted successfully!', 'Close');
-    }*/
+    }*/ else if (this.action === 'Delete' && this.user.uuid) {
+      this.userService.deleteUser(this.user.uuid).subscribe(
+        () => {
+          // Only close the dialog and show the snackbar after deletion succeeds
+          this.dialogRef.close({ event: 'Delete' });
+          this.openSnackBar('Employee Deleted successfully!', 'Close');
+        },
+        (error) => {
+          console.error('Error deleting user:', error);
+          this.openSnackBar('Failed to delete employee!', 'Close');
+        }
+      );
+    }
   }
+
+  saveUser(user: User): Observable<User> {
+    return this.userService.createUser(user);
+  }
+
+
+
+
 
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
@@ -225,7 +252,7 @@ export class AppEmployeeDialogContentComponent {
 
     reader.onload = (_event) => {
       if (typeof reader.result === 'string') {
-     //   this.local_data.imagePath = reader.result; // Set selected image path
+        this.user.imagePath = reader.result; // Set selected image path
       }
     };
   }
