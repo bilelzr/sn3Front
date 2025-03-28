@@ -3,7 +3,7 @@ import {
   Inject,
   Optional,
   ViewChild,
-  AfterViewInit,
+  AfterViewInit, OnInit,
 } from '@angular/core';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -21,7 +21,10 @@ import { Employee } from 'src/app/pages/apps/employee/employee';
 import { EmployeeService } from 'src/app/services/apps/employee/employee.service';
 import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import {UserService} from "../../../services/apps/user/user.service";
+import {User} from "../../../services/models/user";
 @Component({
+  selector: 'app-employee',
   templateUrl: './employee.component.html',
   imports: [
     MaterialModule,
@@ -31,7 +34,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     CommonModule,
   ],
 })
-export class AppEmployeeComponent implements AfterViewInit {
+export class AppEmployeeComponent implements AfterViewInit,OnInit {
   @ViewChild(MatTable, { static: true }) table: MatTable<any> =
     Object.create(null);
 
@@ -48,25 +51,53 @@ export class AppEmployeeComponent implements AfterViewInit {
     'action',
   ];
 
-  dataSource = new MatTableDataSource<Employee>([]);
-
+  dataSource = new MatTableDataSource<User>([]);
+  users: User[] = [];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator =
     Object.create(null);
 
   constructor(
     public dialog: MatDialog,
-    private employeeService: EmployeeService
-  ) {}
+    private employeeService: EmployeeService,
+    private userService: UserService,
+  ) {
+  }
 
   ngOnInit(): void {
-    this.loadEmployees();
+    this.loadAllUsers();
   }
 
-  loadEmployees(): void {
-    const employee = this.employeeService.getEmployees();
-    this.dataSource.data = employee;
-    this.dataSource = new MatTableDataSource(employee);
+  loadAllUsers(): void {
+    this.userService.findAllUsers().subscribe(
+      (response: User[]) => {
+        console.log("Response from API:", response); // ✅ Log AFTER data is fetched
+        this.users = response;
+        this.dataSource.data = this.users; // ✅ Correct way to update MatTableDataSource
+        this.dataSource = new MatTableDataSource(this.users); // ✅ Ensuring table update
+        console.log(this.users);
+      },
+      (error) => {
+        console.error("Error fetching users:", error);
+      }
+    );
   }
+
+
+
+/*  async getUserByEmail(userEmail: string): Promise<void> {
+
+    this.userService.getUserByEmail(userEmail).subscribe(
+      (response: User) => {
+        this.user = response;
+        sessionStorage.setItem('userRole', response.role?.toString() ?? '');
+        sessionStorage.setItem('userEmail', userEmail);
+      },
+      (error) => {
+        console.error('restoring module error', error);
+      }
+    );
+  }*/
+
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
   }
@@ -81,9 +112,10 @@ export class AppEmployeeComponent implements AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      this.dataSource.data = this.employeeService.getEmployees();
+      this.loadAllUsers()
+      this.dataSource.data = this.users;
       if (result && result.event === 'Refresh') {
-        this.loadEmployees(); // Refresh the employee list if necessary
+        this.loadAllUsers(); // Refresh the employee list if necessary
       }
     });
   }
@@ -91,7 +123,7 @@ export class AppEmployeeComponent implements AfterViewInit {
 
 interface DialogData {
   action: string;
-  employee: Employee;
+  user: User;
 }
 
 @Component({
@@ -110,7 +142,7 @@ interface DialogData {
 export class AppEmployeeDialogContentComponent {
   action: string | any;
   // tslint:disable-next-line - Disables all
-  local_data: Employee;
+  local_data: User;
   selectedImage: any = '';
   joiningDate = new FormControl();
 
@@ -124,7 +156,7 @@ export class AppEmployeeDialogContentComponent {
     @Optional() @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {
     this.action = data.action;
-    this.local_data = { ...data.employee };
+    this.local_data = { ...data.user };
 
     this.joiningDate = new FormControl();
 
@@ -138,15 +170,15 @@ export class AppEmployeeDialogContentComponent {
     }
 
     // Set default image path if not already set
-    if (!this.local_data.imagePath) {
+/*    if (!this.local_data.imagePath) {
       this.local_data.imagePath = 'assets/images/profile/user-1.jpg';
-    }
+    }*/
   }
 
   doAction(): void {
     this.local_data.DateOfJoining = this.joiningDate.value;
 
-    if (this.action === 'Add') {
+/*    if (this.action === 'Add') {
       this.employeeService.addEmployee(this.local_data);
       this.dialogRef.close();
       // Open success dialog
@@ -163,7 +195,7 @@ export class AppEmployeeDialogContentComponent {
       this.employeeService.deleteEmployee(this.local_data.id);
       this.dialogRef.close({ event: 'Delete' });
       this.openSnackBar('Employee Deleted successfully!', 'Close');
-    }
+    }*/
   }
 
   openSnackBar(message: string, action: string) {
@@ -193,7 +225,7 @@ export class AppEmployeeDialogContentComponent {
 
     reader.onload = (_event) => {
       if (typeof reader.result === 'string') {
-        this.local_data.imagePath = reader.result; // Set selected image path
+     //   this.local_data.imagePath = reader.result; // Set selected image path
       }
     };
   }

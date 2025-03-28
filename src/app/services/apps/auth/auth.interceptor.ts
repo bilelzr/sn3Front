@@ -12,21 +12,9 @@ export class AuthInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     console.log('Interceptor executed');
-
-    // Check if the request method is OPTIONS (preflight request)
-    if (request.method === 'OPTIONS') {
-      // Modify the headers for the OPTIONS request here
-      request = request.clone({
-        setHeaders: {
-          'Authorization': `Bearer ${this.authService.getToken()}`, // Add Authorization or any other header
-          'Custom-Header': 'YourCustomHeaderValue',  // Add any custom headers for OPTIONS requests
-        }
-      });
-    }
-
     return this.authService.getToken().pipe(
       switchMap((token) => {
-        if (token && request.method !== 'OPTIONS') {
+        if (token) {
           request = request.clone({
             setHeaders: {
               Authorization: `Bearer ${token}`,
@@ -36,6 +24,8 @@ export class AuthInterceptor implements HttpInterceptor {
         return next.handle(request).pipe(
           catchError((error) => {
             if (error.status === 401 || error.status === 403) {
+              // Handle unauthorized or forbidden errors here
+              // For example, trigger sign-in process
               return this.handleAuthError(request, next);
             }
             return throwError(error);
@@ -49,6 +39,12 @@ export class AuthInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<any> {
+    // Trigger your sign-in process here
+    // For example, navigate to the sign-in page
+    // or show a sign-in modal/dialog
+    // You might want to store the original request and retry it after successful sign-in
+
+    // For demonstration, let's just log a message and return an observable that ends the chain
     console.error('Unauthenticated request. Redirecting to sign-in page.');
     this.authService.logout();
     this.router.navigate(['/']);

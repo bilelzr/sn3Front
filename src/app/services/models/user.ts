@@ -9,4 +9,7 @@ export interface User {
   role?: UserRole ;
   accountNonLocked?: boolean;
   uuid?: string;
+  DateOfJoining?: Date;
+  imagePath?: string;
+
 }

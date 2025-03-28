@@ -38,7 +38,7 @@
             required
             id="name"
             name="name"
-            [(ngModel)]="local_data.Name"
+            [(ngModel)]="local_data.firstName"
             placeholder="Name"
           />
         </mat-form-field>
@@ -52,7 +52,7 @@
             required
             id="position"
             name="position"
-            [(ngModel)]="local_data.Position"
+            [(ngModel)]="local_data.role"
             placeholder="Position"
           />
         </mat-form-field>
@@ -66,7 +66,7 @@
             required
             id="email"
             name="email"
-            [(ngModel)]="local_data.Email"
+            [(ngModel)]="local_data.email"
             placeholder="Email"
           />
         </mat-form-field>
@@ -82,7 +82,7 @@
             required
             id="mobile"
             name="mobile"
-            [(ngModel)]="local_data.Mobile"
+            [(ngModel)]="local_data.phone"
             placeholder="Mobile"
           />
         </mat-form-field>
@@ -115,7 +115,7 @@
             required
             id="salary"
             name="salary"
-            [(ngModel)]="local_data.Salary"
+            [(ngModel)]="local_data.lastName"
             placeholder="Salary"
           />
         </mat-form-field>
@@ -129,7 +129,7 @@
             required
             id="projects"
             name="projects"
-            [(ngModel)]="local_data.Projects"
+            [(ngModel)]="local_data.role"
             placeholder="Projects"
           />
         </mat-form-field>
@@ -160,7 +160,7 @@
 @else {
 <div class="p-x-24 m-y-8">
   <p class="f-s-14">
-    Sure to delete <span class="f-w-600">{{local_data.Name}}</span> ?
+    Sure to delete <span class="f-w-600">{{local_data.firstName}}</span> ?
   </p>
 </div>
 <div mat-dialog-actions class="p-x-24 p-b-24">
