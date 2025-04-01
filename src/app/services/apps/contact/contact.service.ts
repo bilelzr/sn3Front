@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { signal } from '@angular/core';
-import { Contact } from 'src/app/pages/apps/contact/contact';
-import { contactList } from 'src/app/pages/apps/contact/contactData';
+import { Contact } from 'src/app/pages/apps/collaborateur/contact';
+import { contactList } from 'src/app/pages/apps/collaborateur/contactData';
 
 @Injectable({
   providedIn: 'root',

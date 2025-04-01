@@ -25,8 +25,8 @@ import {UserService} from "../../../services/apps/user/user.service";
 import {User} from "../../../services/models/user";
 import {Observable} from "rxjs";
 @Component({
-  selector: 'app-employee',
-  templateUrl: './employee.component.html',
+  selector: 'app-user',
+  templateUrl: './user.component.html',
   imports: [
     MaterialModule,
     FormsModule,
@@ -35,7 +35,7 @@ import {Observable} from "rxjs";
     CommonModule,
   ],
 })
-export class AppEmployeeComponent implements AfterViewInit,OnInit {
+export class AppUserComponent implements AfterViewInit,OnInit {
   @ViewChild(MatTable, { static: true }) table: MatTable<any> =
     Object.create(null);
 
@@ -135,7 +135,7 @@ interface DialogData {
     CommonModule,
     TablerIconsModule,
   ],
-  templateUrl: 'employee-dialog-content.html',
+  templateUrl: 'user-dialog-content.html',
 })
 // tslint:disable-next-line: component-class-suffix
 export class AppUserDialogContentComponent {
@@ -143,6 +143,7 @@ export class AppUserDialogContentComponent {
   // tslint:disable-next-line - Disables all
   user: User;
   selectedImage: any = '';
+  roles: string[] = ['RDP', 'INGENIEUR', 'ADMIN'];
   joiningDate = new FormControl();
 
   constructor(
@@ -189,16 +190,17 @@ export class AppUserDialogContentComponent {
           const successDialogRef = this.dialog.open(AppAddEmployeeComponent);
           successDialogRef.afterClosed().subscribe(() => {
             this.dialogRef.close({ event: 'Refresh' });
-            this.openSnackBar('Employee Added successfully!', 'Close');
+            this.openSnackBar('User Added successfully!', 'Close');
           });
         },
         (error: any) => {
           console.error("Error creating user:", error);
-          this.openSnackBar('Failed to add employee!', 'Close');
+          this.openSnackBar('Failed to add user!', 'Close');
         }
       );
 
-    } /*else if (this.action === 'Update') {
+    }//TODO : finish the update low priority
+    /* else if (this.action === 'Update') {
       this.employeeService.updateEmployee(this.user);
       this.dialogRef.close({ event: 'Update' });
       this.openSnackBar('Employee Updated successfully!', 'Close');
@@ -207,11 +209,11 @@ export class AppUserDialogContentComponent {
         () => {
           // Only close the dialog and show the snackbar after deletion succeeds
           this.dialogRef.close({ event: 'Delete' });
-          this.openSnackBar('Employee Deleted successfully!', 'Close');
+          this.openSnackBar('User Deleted successfully!', 'Close');
         },
         (error) => {
           console.error('Error deleting user:', error);
-          this.openSnackBar('Failed to delete employee!', 'Close');
+          this.openSnackBar('Failed to delete user!', 'Close');
         }
       );
     }

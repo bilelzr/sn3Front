@@ -5,10 +5,8 @@ import { AppEmailComponent } from './email/email.component';
 import { DetailComponent } from './email/detail/detail.component';
 import { AppCoursesComponent } from './courses/courses.component';
 import { AppCourseDetailComponent } from './courses/course-detail/course-detail.component';
-import { AppEmployeeComponent } from './employee/employee.component';
 import { AppBlogsComponent } from './blogs/blogs.component';
 import { AppBlogDetailsComponent } from './blogs/details/details.component';
-import { AppContactComponent } from './contact/contact.component';
 import { AppNotesComponent } from './notes/notes.component';
 import { AppTodoComponent } from './todo/todo.component';
 import { AppPermissionComponent } from './permission/permission.component';
@@ -20,6 +18,8 @@ import { AppAddInvoiceComponent } from './invoice/add-invoice/add-invoice.compon
 import { AppInvoiceViewComponent } from './invoice/invoice-view/invoice-view.component';
 import { AppEditInvoiceComponent } from './invoice/edit-invoice/edit-invoice.component';
 import { AppContactListComponent } from './contact-list/contact-list.component';
+import {AppCollaborateurComponent} from "./collaborateur/collaborateur.component";
+import {AppUserComponent} from "./employee/user.component";
 
 
 export const AppsRoutes: Routes = [
@@ -130,12 +130,12 @@ export const AppsRoutes: Routes = [
       },
       {
         path: 'contacts',
-        component: AppContactComponent,
+        component: AppCollaborateurComponent,
         data: {
-          title: 'Contacts',
+          title: 'Collaborateur',
           urls: [
             { title: 'Dashboard', url: '/dashboards/dashboard1' },
-            { title: 'Contacts' },
+            { title: 'Collaborateur' },
           ],
         },
       },
@@ -196,12 +196,12 @@ export const AppsRoutes: Routes = [
       },
       {
         path: 'employee',
-        component: AppEmployeeComponent,
+        component: AppUserComponent,
         data: {
-          title: 'Employee',
+          title: 'User',
           urls: [
             { title: 'Dashboard', url: '/dashboards/dashboard1' },
-            { title: 'Employee' },
+            { title: 'User' },
           ],
         },
       },

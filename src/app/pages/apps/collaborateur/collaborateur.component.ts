@@ -11,6 +11,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import {User} from "../../../services/models/user";
+import {MatTableDataSource} from "@angular/material/table";
+import {UserService} from "../../../services/apps/user/user.service";
 
 export interface ContactData {
   contacts: Contact[];
@@ -25,7 +28,8 @@ export interface ContactData {
 }
 
 @Component({
-  templateUrl: './contact.component.html',
+  selector: 'app-collaborateur',
+  templateUrl: './collaborateur.component.html',
   imports: [
     MaterialModule,
     FormsModule,
@@ -34,7 +38,7 @@ export interface ContactData {
     CommonModule,
   ],
 })
-export class AppContactComponent implements OnInit {
+export class AppCollaborateurComponent implements OnInit {
   Contactname = signal<string>('');
   ContactPost = signal<string>('');
   Contactadd = signal<string>('');
@@ -43,22 +47,33 @@ export class AppContactComponent implements OnInit {
   Contactlinkedin = signal<string>('');
   Contactfacebook = signal<string>('');
 
-  contacts = signal<Contact[]>([]);
+  collaborateur = signal<User[]>([]);
   searchText = signal<string>('');
 
   constructor(
     public dialog: MatDialog,
     private contactService: ContactService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private userService : UserService
   ) {}
 
   ngOnInit(): void {
-    this.contacts.set(this.contactService.getContacts());
+   this.loadAllUsers()
   }
 
-  openDialog(action: string, obj: any): void {
+  loadAllUsers(): void {
+    this.userService.findAllNonAdminUsers().subscribe(
+      (response: User[]) => {
+        this.collaborateur.set(response); // Set the whole user list
+      },
+      (error) => {
+        console.error("Error fetching users:", error);
+      }
+    );
+  }
+/*  openDialog(action: string, obj: any): void {
     obj.action = action;
-    const dialogRef = this.dialog.open(AppContactDialogContentComponent, {
+    const dialogRef = this.dialog.open(AppCollaborateurDialogContentComponent, {
       data: obj,
       autoFocus: false
     });
@@ -68,15 +83,15 @@ export class AppContactComponent implements OnInit {
         this.addContact(result.data);
       }
     });
-  }
+  }*/
 
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.searchText.set(filterValue);
-    this.contacts.set(this.contactService.filterContacts(filterValue));
+  //  this.collaborateur.set(this.contactService.filterContacts(filterValue));
   }
 
-  addContact(row_obj: any): void {
+/*  addContact(row_obj: any): void {
     const newContact: Contact = {
       contactimg: row_obj.contactimg || 'assets/images/profile/user-1.jpg',
       contactname: row_obj.Contactname,
@@ -89,14 +104,14 @@ export class AppContactComponent implements OnInit {
     };
 
     this.contactService.addContact(newContact);
-    this.contacts.set(this.contactService.getContacts());
+    this.collaborateur.set(this.contactService.getContacts());
 
     this.snackBar.open('New contact added successfully!', 'Close', {
       duration: 3000,
       horizontalPosition: 'center',
       verticalPosition: 'top',
     });
-  }
+  }*/
 }
 
 @Component({
@@ -108,16 +123,16 @@ export class AppContactComponent implements OnInit {
     CommonModule,
     TablerIconsModule,
   ],
-  templateUrl: 'contact-dialog-content.html',
+  templateUrl: 'collaborateur-dialog-content.html',
 })
-export class AppContactDialogContentComponent {
+export class AppCollaborateurDialogContentComponent {
   action: string;
 
   local_data: ContactData | any;
   selectedFile: File | null = null;
 
   constructor(
-    public dialogRef: MatDialogRef<AppContactDialogContentComponent>,
+    public dialogRef: MatDialogRef<AppCollaborateurDialogContentComponent>,
 
     @Optional() @Inject(MAT_DIALOG_DATA) public data: ContactData
   ) {

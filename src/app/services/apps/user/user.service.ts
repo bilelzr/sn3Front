@@ -22,6 +22,11 @@ export class UserService {
     return this.http.get<User[]>(`${this.backendUrl}/all`);
   }
 
+  findAllNonAdminUsers(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.backendUrl}/all/nonadmin`);
+  }
+
+
   createUser(newUser: User): Observable<User> {
     return this.http.post<User>(`${this.backendUrl}/add`, newUser);
   }

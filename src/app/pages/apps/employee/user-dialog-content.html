@@ -60,15 +60,11 @@
         <div class="col-lg-6">
           <mat-label class="f-s-14 f-w-600 m-b-8 d-block">Role</mat-label>
           <mat-form-field appearance="outline" class="w-100">
-            <input
-              type="text"
-              matInput
-              required
-              id="position"
-              name="position"
-              [(ngModel)]="user.role"
-              placeholder="Position"
-            />
+            <mat-select [(ngModel)]="user.role" required name="position" id="position" placeholder="Select Role">
+              <mat-option *ngFor="let role of roles" [value]="role">
+                {{ role }}
+              </mat-option>
+            </mat-select>
           </mat-form-field>
         </div>
         <div class="col-lg-6">
