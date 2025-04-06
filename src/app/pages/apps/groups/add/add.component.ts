@@ -3,10 +3,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 
 @Component({
-    selector: 'app-add-Application',
+    selector: 'app-add-Group',
     imports: [MatDialogModule, MatButtonModule],
     templateUrl: './add.component.html'
 })
-export class AppAddApplicationComponent {
+export class AppAddGroupComponent {
   constructor() {}
 }

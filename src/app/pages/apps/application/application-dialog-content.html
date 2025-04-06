@@ -13,146 +13,37 @@
 <!-- Add Employee -->
 <!-- -------------------------------------------------------------- -->
 
-@if (action !== 'Delete') {
+@if (action === 'Add' || action === 'Update') {
   <mat-dialog-content>
     <form #applicatioForm="ngForm">
 
-      <div class="row">
-        <div class="col-lg-6">
-          <mat-label class="f-s-14 f-w-600 m-b-8 d-block">Application Name</mat-label>
-          <mat-form-field appearance="outline" class="w-100">
-            <input
-              type="text"
-              matInput
-              required
-              id="application_name"
-              name="application_name"
-              [(ngModel)]="application.applicationName"
-              placeholder="Name"
-            />
-          </mat-form-field>
-        </div>
-        <div class="col-lg-6">
-          <mat-label class="f-s-14 f-w-600 m-b-8 d-block">Descriptionn</mat-label>
-          <mat-form-field appearance="outline" class="w-100">
-            <input
-              type="text"
-              matInput
-              required
-              id="application_description"
-              name="application_description"
-              [(ngModel)]="application.applicationDescription"
-              placeholder="Name"
-            />
-          </mat-form-field>
-        </div>
-       <div class="col-lg-6">
-          <mat-label class="f-s-14 f-w-600 m-b-8 d-block">Group</mat-label>
-          <mat-form-field appearance="outline" class="w-100">
-            <mat-select required name="position" id="position" placeholder="Select Role">
-              <mat-option *ngFor="let group of groupes" [value]="group">
-                {{ group }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <!--
-        <div class="col-lg-6">
-          <mat-label class="f-s-14 f-w-600 m-b-8 d-block">Email</mat-label>
-          <mat-form-field appearance="outline" class="w-100">
-            <input
-              type="text"
-              matInput
-              required
-              id="email"
-              name="email"
-              [(ngModel)]="user.email"
-              placeholder="Email"
-            />
-          </mat-form-field>
-        </div>
-        <!--
-        <div class="col-lg-6">
-          <mat-label class="f-s-14 f-w-600 m-b-8 d-block"
-          >Mot de passe
-          </mat-label
-          >
-          <mat-form-field appearance="outline" class="w-100">
-            <input
-              type="password"
-              matInput
-              required
-              id="password"
-              name="password"
-              [(ngModel)]="user.password"
-              placeholder="Password"
-            />
-          </mat-form-field>
-        </div>
-        <div class="col-lg-6">
-          <mat-label class="f-s-14 f-w-600 m-b-8 d-block"
-          >téléphone
-          </mat-label
-          >
-          <mat-form-field appearance="outline" class="w-100">
-            <input
-              type="text"
-              matInput
-              required
-              id="mobile"
-              name="mobile"
-              [(ngModel)]="user.phone"
-              placeholder="Mobile"
-            />
-          </mat-form-field>
-        </div>-->
-        @if (action === 'Update') {
-          <div class="col-lg-6">
-            <mat-label class="f-s-14 f-w-600 m-b-8 d-block">Joining Date</mat-label>
-            <mat-form-field appearance="outline" class="w-100">
-              <input
-                matInput
-                [matDatepicker]="picker"
-                [formControl]="joiningDate"
-                placeholder="Choose a date"
-              />
-              <mat-datepicker-toggle
-                matSuffix
-                [for]="picker"
-              ></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
-          </div>
-        }
-
-        <!--      <div class="col-lg-6">
-                <mat-label class="f-s-14 f-w-600 m-b-8 d-block">Salary</mat-label>
-                <mat-form-field appearance="outline" class="w-100">
-                  <input
-                    type="text"
-                    matInput
-                    required
-                    id="salary"
-                    name="salary"
-                    [(ngModel)]="local_data.lastName"
-                    placeholder="Salary"
-                  />
-                </mat-form-field>
-              </div>-->
-        <!--      <div class="col-lg-6">
-                <mat-label class="f-s-14 f-w-600 m-b-8 d-block">Projects</mat-label>
-                <mat-form-field appearance="outline" class="w-100">
-                  <input
-                    type="text"
-                    matInput
-                    required
-                    id="projects"
-                    name="projects"
-                    [(ngModel)]="local_data.role"
-                    placeholder="Projects"
-                  />
-                </mat-form-field>
-              </div>-->
+      <div class="col-lg-12">
+        <mat-label class="f-s-14 f-w-600 m-b-8 d-block">Application Name</mat-label>
+        <mat-form-field appearance="outline" class="w-100">
+          <input
+            type="text"
+            matInput
+            required
+            id="application_name"
+            name="application_name"
+            [(ngModel)]="application.applicationName"
+            placeholder="Name"
+          />
+        </mat-form-field>
+      </div>
+      <div class="col-lg-12">
+        <mat-label class="f-s-14 f-w-600 m-b-8 d-block">Description</mat-label>
+        <mat-form-field appearance="outline" class="w-100">
+           <textarea
+             matInput
+             required
+             id="application_description"
+             name="application_description"
+             [(ngModel)]="application.applicationDescription"
+             placeholder="Enter description"
+             rows="4"
+           ></textarea>
+        </mat-form-field>
       </div>
       <button
         mat-flat-button
@@ -171,6 +62,42 @@
       </button>
     </form>
   </mat-dialog-content>
+} @else if (action === 'Assign') {
+  <mat-dialog-content>
+    <form #applicatioForm="ngForm">
+      <div class="col-lg-12">
+        <mat-label class="f-s-14 f-w-600 m-b-8 d-block">Group</mat-label>
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-select
+            required
+            name="position"
+            id="position"
+            placeholder="Select Group"
+            [(ngModel)]="selectGroup"
+          >
+            <mat-option *ngFor="let group of groupes" [value]="group">
+              {{ group.groupName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <button
+        mat-flat-button
+        (click)="doAction()"
+        [disabled]="!applicatioForm.valid"
+      >
+        {{ action }}
+      </button>
+      <button
+        mat-flat-button
+        class="m-l-8 bg-error text-white"
+        (click)="closeDialog()"
+      >
+        Cancel
+      </button>
+    </form>
+  </mat-dialog-content>
+
 }
 <!-- -------------------------------------------------------------- -->
 <!-- Delete Employee info -->

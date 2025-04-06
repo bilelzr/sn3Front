@@ -21,12 +21,57 @@ import {AppContactListComponent} from './contact-list/contact-list.component';
 import {AppCollaborateurComponent} from "./collaborateur/collaborateur.component";
 import {AppUserComponent} from "./employee/user.component";
 import {AppApplicationComponent} from "./application/application.component";
+import {AppGroupComponent} from "./groups/group.component";
 
 
 export const AppsRoutes: Routes = [
   {
     path: '',
     children: [
+      {
+        path: 'user',
+        component: AppUserComponent,
+        data: {
+          title: 'User',
+          urls: [
+            {title: 'Dashboard', url: '/dashboards/dashboard1'},
+            {title: 'User'},
+          ],
+        },
+      },
+      {
+        path: 'group',
+        component: AppGroupComponent,
+        data: {
+          title: 'Group',
+          urls: [
+            {title: 'Dashboard', url: '/dashboards/dashboard1'},
+            {title: 'Group'},
+          ],
+        },
+      },
+      {
+        path: 'application',
+        component: AppApplicationComponent,
+        data: {
+          title: 'Application',
+          urls: [
+            {title: 'Dashboard', url: '/dashboards/dashboard1'},
+            {title: 'Application'},
+          ],
+        },
+      },
+      {
+        path: 'collaborateur',
+        component: AppCollaborateurComponent,
+        data: {
+          title: 'Collaborateur',
+          urls: [
+            {title: 'Dashboard', url: '/dashboards/dashboard1'},
+            {title: 'Collaborateur'},
+          ],
+        },
+      },
       {
         path: 'chat',
         component: AppChatComponent,
@@ -130,17 +175,6 @@ export const AppsRoutes: Routes = [
         },
       },
       {
-        path: 'collaborateur',
-        component: AppCollaborateurComponent,
-        data: {
-          title: 'Collaborateur',
-          urls: [
-            {title: 'Dashboard', url: '/dashboards/dashboard1'},
-            {title: 'Collaborateur'},
-          ],
-        },
-      },
-      {
         path: 'courses',
         component: AppCoursesComponent,
         data: {
@@ -195,28 +229,7 @@ export const AppsRoutes: Routes = [
           ],
         },
       },
-      {
-        path: 'application',
-        component: AppApplicationComponent,
-        data: {
-          title: 'Application',
-          urls: [
-            {title: 'Dashboard', url: '/dashboards/dashboard1'},
-            {title: 'Application'},
-          ],
-        },
-      },
-      {
-        path: 'user',
-        component: AppUserComponent,
-        data: {
-          title: 'User',
-          urls: [
-            {title: 'Dashboard', url: '/dashboards/dashboard1'},
-            {title: 'User'},
-          ],
-        },
-      },
+
       {
         path: 'invoice',
         component: AppInvoiceListComponent,

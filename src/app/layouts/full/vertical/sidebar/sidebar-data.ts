@@ -18,6 +18,26 @@ export const navItems: NavItem[] = [
     navCap: 'Apps',
   },
   {
+    displayName: 'User',
+    iconName: 'brand-ctemplar',
+    route: 'apps/user',
+  },
+  {
+    displayName: 'Application',
+    iconName: 'brand-ctemplar',
+    route: 'apps/application',
+  },
+  {
+    displayName: 'Collaborateur',
+    iconName: 'phone',
+    route: 'apps/collaborateur',
+  },
+  {
+    displayName: 'Group',
+    iconName: 'phone',
+    route: 'apps/group',
+  },
+  {
     displayName: 'Chat',
     iconName: 'message-2',
     route: 'apps/chat',
@@ -37,11 +57,7 @@ export const navItems: NavItem[] = [
     iconName: 'checklist',
     route: 'apps/kanban',
   },
-  {
-    displayName: 'Collaborateur',
-    iconName: 'phone',
-    route: 'apps/collaborateur',
-  },
+
   {
     displayName: 'Contact List',
     iconName: 'phone',
@@ -54,16 +70,6 @@ export const navItems: NavItem[] = [
     displayName: 'Courses',
     iconName: 'certificate',
     route: 'apps/courses',
-  },
-  {
-    displayName: 'User',
-    iconName: 'brand-ctemplar',
-    route: 'apps/user',
-  },
-  {
-    displayName: 'Application',
-    iconName: 'brand-ctemplar',
-    route: 'apps/application',
   },
   {
     displayName: 'Notes',

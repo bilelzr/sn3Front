@@ -13,6 +13,8 @@ import {User} from "../../../services/models/user";
 import {Observable} from "rxjs";
 import {Application} from "../../../services/models/application";
 import {ApplicationService} from "../../../services/apps/application/application.service";
+import {Group} from "../../../services/models/group";
+import {GroupService} from "../../../services/apps/Group/group.service";
 
 @Component({
   selector: 'app-user',
@@ -34,8 +36,8 @@ export class AppApplicationComponent implements AfterViewInit, OnInit {
   displayedColumns: string[] = [
     'name',
     'Description',
+    'CreationDate',
     'action',
-    'CreationDate'
   ];
 
   dataSource = new MatTableDataSource<User>([]);
@@ -90,9 +92,9 @@ export class AppApplicationComponent implements AfterViewInit, OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  openDialog(action: string, user: User | any): void {
+  openDialog(action: string, application: Application | any): void {
     const dialogRef = this.dialog.open(AppApplicationDialogContentComponent, {
-      data: {action, user}, autoFocus: false
+      data: {action, application}, autoFocus: false
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -128,7 +130,8 @@ export class AppApplicationDialogContentComponent {
   // tslint:disable-next-line - Disables all
   application: Application;
   selectedImage: any = '';
-  groupes: string[] = ['RDP', 'INGENIEUR', 'ADMIN'];
+  groupes: Group[] = [];
+  selectGroup: Group;
   joiningDate = new FormControl();
 
   constructor(
@@ -136,31 +139,18 @@ export class AppApplicationDialogContentComponent {
     public dialogRef: MatDialogRef<AppApplicationDialogContentComponent>,
     private snackBar: MatSnackBar,
     private applicationService: ApplicationService,
+    private groupService: GroupService,
     // @Optional() is used to prevent error if no data is passed
     @Optional() @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {
     this.action = data.action;
     this.application = {...data.application};
+    this.loadAllGroups();
+    console.log(this.groupes, "check")
 
-    /*    this.joiningDate = new FormControl();
-
-        if (this.user.DateOfJoining) {
-          this.joiningDate.setValue(
-            new Date(this.user.DateOfJoining).toISOString().split('T')[0]
-          ); //  existing date
-        } else {
-          // Set to today's date if no existing date is available
-          this.joiningDate.setValue(new Date().toISOString().split('T')[0]);
-        }*/
-
-    // Set default image path if not already set
-    /*    if (!this.local_data.imagePath) {
-          this.local_data.imagePath = 'assets/images/profile/user-1.jpg';
-        }*/
   }
 
   doAction(): void {
-
     if (this.action === 'Add') {
       console.log(this.application)
       this.saveApplication(this.application).subscribe(
@@ -176,30 +166,56 @@ export class AppApplicationDialogContentComponent {
           });
         },
         (error: any) => {
-          console.error("Error creating user:", error);
+          console.error("Error creating Applicationn:", error);
           this.openSnackBar('Failed to add application!', 'Close');
         }
       );
 
-    }//TODO : finish the update low priority
-    /* else if (this.action === 'Update') {
-      this.employeeService.updateEmployee(this.user);
-      this.dialogRef.close({ event: 'Update' });
-      this.openSnackBar('Employee Updated successfully!', 'Close');
-    }*/ /*else if (this.action === 'Delete' && this.application.uuid) {
-      this.userService.deleteUser(this.user.uuid).subscribe(
+      // }//TODO : finish the update low priority
+      /*  else if (this.action === 'Update') {
+         this.employeeService.updateEmployee(this.user);
+         this.dialogRef.close({ event: 'Update' });
+         this.openSnackBar('Employee Updated successfully!', 'Close');*/
+
+    } else if (this.action === 'Assign' && this.application.applicationName && this.selectGroup.uuid) {
+      this.applicationService.affectGroupToApplication(this.application.applicationName, this.selectGroup.uuid).subscribe(
+        () => {
+          // Only close the dialog and show the snackbar after deletion succeeds
+          this.dialogRef.close({event: 'Assign'});
+          this.openSnackBar('Group assigned successfully!', 'Close');
+        },
+        (error) => {
+          console.error('Error during assigning group:', error);
+          this.openSnackBar('Failed to assing group !', 'Close');
+        }
+      );
+
+    } else if (this.action === 'Delete' && this.application.applicationName) {
+      this.applicationService.deleteApplication(this.application.applicationName).subscribe(
         () => {
           // Only close the dialog and show the snackbar after deletion succeeds
           this.dialogRef.close({event: 'Delete'});
-          this.openSnackBar('User Deleted successfully!', 'Close');
+          this.openSnackBar('Application Deleted successfully!', 'Close');
         },
         (error) => {
-          console.error('Error deleting user:', error);
-          this.openSnackBar('Failed to delete user!', 'Close');
+          console.error('Error deleting Application:', error);
+          this.openSnackBar('Failed to delete Application!', 'Close');
         }
       );
-    }*/
+    }
   }
+
+  loadAllGroups(): void {
+    this.groupService.findAllGroups().subscribe(
+      (response: Group[]) => {
+        this.groupes = response;
+      },
+      (error) => {
+        console.error("Error fetching Group:", error);
+      }
+    );
+  }
+
 
   saveApplication(application: Application): Observable<Application> {
     return this.applicationService.addApplication(application);

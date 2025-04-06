@@ -14,9 +14,6 @@ export class ApplicationService {
   constructor(private http: HttpClient) {
   }
 
-  getApplicationByName(nameApp: string): Observable<Application> {
-    return this.http.get<Application>(`${this.backendUrl}/byname/${nameApp}`);
-  }
 
   findAllApp(): Observable<Application[]> {
     return this.http.get<Application[]>(`${this.backendUrl}/all`);
@@ -27,8 +24,12 @@ export class ApplicationService {
     return this.http.post<Application>(`${this.backendUrl}/add`, newApp);
   }
 
-  deleteApplication(uuid: string): Observable<any> {
+  deleteApplication(applicationName: string): Observable<any> {
     console.log("delete method")
-    return this.http.delete<any>(`${this.backendUrl}/delete/` + uuid);
+    return this.http.delete<any>(`${this.backendUrl}/delete/` + applicationName);
+  }
+
+  affectGroupToApplication(applicationName: String, uuidGroup: String): Observable<any> {
+    return this.http.post<any>(`${this.backendUrl}/addGroup/` + applicationName + "/" + uuidGroup, null);
   }
 }

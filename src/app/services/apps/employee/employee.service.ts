@@ -1,12 +1,12 @@
 import { Injectable, signal } from '@angular/core';
 import { Employee } from 'src/app/pages/apps/employee/employee';
-import { employees } from 'src/app/pages/apps/employee/employeeData';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EmployeeService {
-  private employees = signal<Employee[]>(employees);
+  // @ts-ignore
+  private employees = signal<Employee[]>(null);
 
   getEmployees() {
     return this.employees();

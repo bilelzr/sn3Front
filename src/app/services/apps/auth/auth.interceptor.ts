@@ -48,8 +48,6 @@ export class AuthInterceptor implements HttpInterceptor {
 
     // For demonstration, let's just log a message and return an observable that ends the chain
     console.error('Unauthenticated request. Redirecting to sign-in page.');
-    this.authService.logout();
-    this.router.navigate(['/']);
     return throwError('Unauthenticated request. Redirecting to sign-in page.');
   }
 }
