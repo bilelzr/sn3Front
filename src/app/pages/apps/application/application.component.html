@@ -5,7 +5,7 @@
         <mat-form-field appearance="outline" class="w-100 hide-hint">
           <input
             matInput
-            placeholder="Search User"
+            placeholder="Search Application"
             (keyup)="applyFilter($any($event.target).value)"
           />
           <mat-icon matSuffix>
@@ -14,9 +14,9 @@
         </mat-form-field>
       </div>
       <div class="col-lg-4 d-flex align-items-center justify-content-end">
-        <!-- add employee -->
+        <!-- add application -->
         <button mat-flat-button (click)="openDialog('Add', {})" color="primary">
-          Add User
+          Add Application
         </button>
       </div>
     </div>
@@ -26,75 +26,36 @@
   <mat-card-content>
     <div class="table-responsive">
       <table mat-table [dataSource]="dataSource" class="w-100">
-        <ng-container matColumnDef="#">
-          <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">#</th>
-          <td mat-cell *matCellDef="let element">{{ element.id }}</td>
-        </ng-container>
-
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">Name</th>
           <td mat-cell *matCellDef="let element">
             <div class="d-flex align-items-center gap-16">
-              <img
-                class="rounded-circle"
-                [src]="element.imagePath"
-                width="45"
-              />
               <div>
                 <h6 class="f-w-600 f-s-16 m-t-0">
-                  {{ element.firstName }}
+                  {{ element.applicationName }}
                 </h6>
-                <span class="f-s-14">{{ element.role }}</span>
               </div>
             </div>
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="email">
+        <ng-container matColumnDef="Description">
           <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
-            Email
+            Description
           </th>
           <td mat-cell *matCellDef="let element" class="f-s-14">
-            {{ element.email }}
+            {{ element.applicationDescription }}
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="mobile">
+        <ng-container matColumnDef="CreationDate">
           <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
-            Mobile
+            Creation Date
           </th>
           <td mat-cell *matCellDef="let element" class="f-s-14">
-            {{ element.phone }}
+            {{ element.creationDate }}
           </td>
         </ng-container>
-
-        <ng-container matColumnDef="date of joining">
-          <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
-            Date of Joining
-          </th>
-          <td mat-cell *matCellDef="let element" class="f-s-14">
-            {{ element.DateOfJoining | date : "fullDate" }}
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="salary">
-          <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
-            Tasks
-          </th>
-          <td mat-cell *matCellDef="let element" class="f-s-14">
-            4
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="projects">
-          <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
-            Applications
-          </th>
-          <td mat-cell *matCellDef="let element" class="f-s-14">
-            2
-          </td>
-        </ng-container>
-
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef class="f-s-16 f-w-600">
             Action

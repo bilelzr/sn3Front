@@ -1,5 +1,5 @@
 <div class="d-flex align-items-center justify-content-between m-b-16 p-x-20 p-t-16">
-  <h3>{{ action }} Employee</h3>
+  <h3>{{ action }} Application</h3>
   <button
     mat-icon-button
     mat-dialog-close
@@ -15,58 +15,48 @@
 
 @if (action !== 'Delete') {
   <mat-dialog-content>
-    <form #userForm="ngForm">
-      <div class="d-flex align-items-center m-b-16">
-        <img
-          class="mat-card-avatar"
-          [src]="user.imagePath"
-          class="rounded-circle"
-          width="50"
-          height="50"
-        />
-        <button mat-flat-button class="m-l-16 input-file-button">
-          <input type="file" (change)="selectFile($event)" #fileInput/>
-        </button>
-      </div>
+    <form #applicatioForm="ngForm">
+
       <div class="row">
         <div class="col-lg-6">
-          <mat-label class="f-s-14 f-w-600 m-b-8 d-block">First Name</mat-label>
+          <mat-label class="f-s-14 f-w-600 m-b-8 d-block">Application Name</mat-label>
           <mat-form-field appearance="outline" class="w-100">
             <input
               type="text"
               matInput
               required
-              id="first_name"
-              name="first_name"
-              [(ngModel)]="user.firstName"
+              id="application_name"
+              name="application_name"
+              [(ngModel)]="application.applicationName"
               placeholder="Name"
             />
           </mat-form-field>
         </div>
         <div class="col-lg-6">
-          <mat-label class="f-s-14 f-w-600 m-b-8 d-block">Last Name</mat-label>
+          <mat-label class="f-s-14 f-w-600 m-b-8 d-block">Descriptionn</mat-label>
           <mat-form-field appearance="outline" class="w-100">
             <input
               type="text"
               matInput
               required
-              id="last_name"
-              name="last_name"
-              [(ngModel)]="user.lastName"
+              id="application_description"
+              name="application_description"
+              [(ngModel)]="application.applicationDescription"
               placeholder="Name"
             />
           </mat-form-field>
         </div>
-        <div class="col-lg-6">
-          <mat-label class="f-s-14 f-w-600 m-b-8 d-block">Role</mat-label>
+       <div class="col-lg-6">
+          <mat-label class="f-s-14 f-w-600 m-b-8 d-block">Group</mat-label>
           <mat-form-field appearance="outline" class="w-100">
-            <mat-select [(ngModel)]="user.role" required name="position" id="position" placeholder="Select Role">
-              <mat-option *ngFor="let role of roles" [value]="role">
-                {{ role }}
+            <mat-select required name="position" id="position" placeholder="Select Role">
+              <mat-option *ngFor="let group of groupes" [value]="group">
+                {{ group }}
               </mat-option>
             </mat-select>
           </mat-form-field>
         </div>
+        <!--
         <div class="col-lg-6">
           <mat-label class="f-s-14 f-w-600 m-b-8 d-block">Email</mat-label>
           <mat-form-field appearance="outline" class="w-100">
@@ -81,6 +71,7 @@
             />
           </mat-form-field>
         </div>
+        <!--
         <div class="col-lg-6">
           <mat-label class="f-s-14 f-w-600 m-b-8 d-block"
           >Mot de passe
@@ -114,7 +105,7 @@
               placeholder="Mobile"
             />
           </mat-form-field>
-        </div>
+        </div>-->
         @if (action === 'Update') {
           <div class="col-lg-6">
             <mat-label class="f-s-14 f-w-600 m-b-8 d-block">Joining Date</mat-label>
@@ -167,7 +158,7 @@
         mat-flat-button
         (click)="doAction()"
         mat-flat-button
-        [disabled]="!userForm.valid"
+        [disabled]="!applicatioForm.valid"
       >
         {{ action }}
       </button>
@@ -188,7 +179,7 @@
 @else {
   <div class="p-x-24 m-y-8">
     <p class="f-s-14">
-      Sure to delete <span class="f-w-600">{{ user.firstName }}</span> ?
+      Sure to delete <span class="f-w-600">{{ application.applicationName }}</span> ?
     </p>
   </div>
   <div mat-dialog-actions class="p-x-24 p-b-24">
