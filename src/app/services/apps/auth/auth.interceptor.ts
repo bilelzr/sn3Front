@@ -11,6 +11,9 @@ export class AuthInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+    if (request.url.match(/\/api\/v1\/auth\/.*/)) {
+      return next.handle(request);
+    }
     return this.authService.getToken().pipe(
       switchMap((token) => {
         if (token) {

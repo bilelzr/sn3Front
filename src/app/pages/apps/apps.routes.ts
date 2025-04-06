@@ -1,25 +1,26 @@
-import { Routes } from '@angular/router';
+import {Routes} from '@angular/router';
 
-import { AppChatComponent } from './chat/chat.component';
-import { AppEmailComponent } from './email/email.component';
-import { DetailComponent } from './email/detail/detail.component';
-import { AppCoursesComponent } from './courses/courses.component';
-import { AppCourseDetailComponent } from './courses/course-detail/course-detail.component';
-import { AppBlogsComponent } from './blogs/blogs.component';
-import { AppBlogDetailsComponent } from './blogs/details/details.component';
-import { AppNotesComponent } from './notes/notes.component';
-import { AppTodoComponent } from './todo/todo.component';
-import { AppPermissionComponent } from './permission/permission.component';
-import { AppKanbanComponent } from './kanban/kanban.component';
-import { AppFullcalendarComponent } from './fullcalendar/fullcalendar.component';
-import { AppTicketlistComponent } from './tickets/tickets.component';
-import { AppInvoiceListComponent } from './invoice/invoice-list/invoice-list.component';
-import { AppAddInvoiceComponent } from './invoice/add-invoice/add-invoice.component';
-import { AppInvoiceViewComponent } from './invoice/invoice-view/invoice-view.component';
-import { AppEditInvoiceComponent } from './invoice/edit-invoice/edit-invoice.component';
-import { AppContactListComponent } from './contact-list/contact-list.component';
+import {AppChatComponent} from './chat/chat.component';
+import {AppEmailComponent} from './email/email.component';
+import {DetailComponent} from './email/detail/detail.component';
+import {AppCoursesComponent} from './courses/courses.component';
+import {AppCourseDetailComponent} from './courses/course-detail/course-detail.component';
+import {AppBlogsComponent} from './blogs/blogs.component';
+import {AppBlogDetailsComponent} from './blogs/details/details.component';
+import {AppNotesComponent} from './notes/notes.component';
+import {AppTodoComponent} from './todo/todo.component';
+import {AppPermissionComponent} from './permission/permission.component';
+import {AppKanbanComponent} from './kanban/kanban.component';
+import {AppFullcalendarComponent} from './fullcalendar/fullcalendar.component';
+import {AppTicketlistComponent} from './tickets/tickets.component';
+import {AppInvoiceListComponent} from './invoice/invoice-list/invoice-list.component';
+import {AppAddInvoiceComponent} from './invoice/add-invoice/add-invoice.component';
+import {AppInvoiceViewComponent} from './invoice/invoice-view/invoice-view.component';
+import {AppEditInvoiceComponent} from './invoice/edit-invoice/edit-invoice.component';
+import {AppContactListComponent} from './contact-list/contact-list.component';
 import {AppCollaborateurComponent} from "./collaborateur/collaborateur.component";
 import {AppUserComponent} from "./employee/user.component";
+import {AppApplicationComponent} from "./application/application.component";
 
 
 export const AppsRoutes: Routes = [
@@ -32,8 +33,8 @@ export const AppsRoutes: Routes = [
         data: {
           title: 'Chat',
           urls: [
-            { title: 'Dashboard', url: '/dashboards/dashboard1' },
-            { title: 'Chat' },
+            {title: 'Dashboard', url: '/dashboards/dashboard1'},
+            {title: 'Chat'},
           ],
         },
       },
@@ -43,8 +44,8 @@ export const AppsRoutes: Routes = [
         data: {
           title: 'Calendar',
           urls: [
-            { title: 'Dashboard', url: '/dashboards/dashboard1' },
-            { title: 'Calendar' },
+            {title: 'Dashboard', url: '/dashboards/dashboard1'},
+            {title: 'Calendar'},
           ],
         },
       },
@@ -54,20 +55,20 @@ export const AppsRoutes: Routes = [
         data: {
           title: 'Notes',
           urls: [
-            { title: 'Dashboard', url: '/dashboards/dashboard1' },
-            { title: 'Notes' },
+            {title: 'Dashboard', url: '/dashboards/dashboard1'},
+            {title: 'Notes'},
           ],
         },
       },
-      { path: 'email', redirectTo: 'email/inbox', pathMatch: 'full' },
+      {path: 'email', redirectTo: 'email/inbox', pathMatch: 'full'},
       {
         path: 'email/:type',
         component: AppEmailComponent,
         data: {
           title: 'Email',
           urls: [
-            { title: 'Dashboard', url: '/dashboards/dashboard1' },
-            { title: 'Email' },
+            {title: 'Dashboard', url: '/dashboards/dashboard1'},
+            {title: 'Email'},
           ],
         },
         children: [
@@ -77,8 +78,8 @@ export const AppsRoutes: Routes = [
             data: {
               title: 'Email Detail',
               urls: [
-                { title: 'Dashboard', url: '/dashboards/dashboard1' },
-                { title: 'Email Detail' },
+                {title: 'Dashboard', url: '/dashboards/dashboard1'},
+                {title: 'Email Detail'},
               ],
             },
           },
@@ -90,8 +91,8 @@ export const AppsRoutes: Routes = [
         data: {
           title: 'Roll Base Access',
           urls: [
-            { title: 'Dashboard', url: '/dashboards/dashboard1' },
-            { title: 'Roll Base Access' },
+            {title: 'Dashboard', url: '/dashboards/dashboard1'},
+            {title: 'Roll Base Access'},
           ],
         },
       },
@@ -101,8 +102,8 @@ export const AppsRoutes: Routes = [
         data: {
           title: 'Todo App',
           urls: [
-            { title: 'Dashboard', url: '/dashboards/dashboard1' },
-            { title: 'Todo App' },
+            {title: 'Dashboard', url: '/dashboards/dashboard1'},
+            {title: 'Todo App'},
           ],
         },
       },
@@ -112,8 +113,8 @@ export const AppsRoutes: Routes = [
         data: {
           title: 'Kanban',
           urls: [
-            { title: 'Dashboard', url: '/dashboards/dashboard1' },
-            { title: 'Kanban' },
+            {title: 'Dashboard', url: '/dashboards/dashboard1'},
+            {title: 'Kanban'},
           ],
         },
       },
@@ -123,19 +124,19 @@ export const AppsRoutes: Routes = [
         data: {
           title: 'Tickets',
           urls: [
-            { title: 'Dashboard', url: '/dashboards/dashboard1' },
-            { title: 'Tickets' },
+            {title: 'Dashboard', url: '/dashboards/dashboard1'},
+            {title: 'Tickets'},
           ],
         },
       },
       {
-        path: 'contacts',
+        path: 'collaborateur',
         component: AppCollaborateurComponent,
         data: {
           title: 'Collaborateur',
           urls: [
-            { title: 'Dashboard', url: '/dashboards/dashboard1' },
-            { title: 'Collaborateur' },
+            {title: 'Dashboard', url: '/dashboards/dashboard1'},
+            {title: 'Collaborateur'},
           ],
         },
       },
@@ -145,8 +146,8 @@ export const AppsRoutes: Routes = [
         data: {
           title: 'Courses',
           urls: [
-            { title: 'Dashboard', url: '/dashboards/dashboard1' },
-            { title: 'Courses' },
+            {title: 'Dashboard', url: '/dashboards/dashboard1'},
+            {title: 'Courses'},
           ],
         },
       },
@@ -156,8 +157,8 @@ export const AppsRoutes: Routes = [
         data: {
           title: 'Contact List',
           urls: [
-            { title: 'Dashboard', url: '/dashboards/dashboard1' },
-            { title: 'Contact List' },
+            {title: 'Dashboard', url: '/dashboards/dashboard1'},
+            {title: 'Contact List'},
           ],
         },
       },
@@ -167,8 +168,8 @@ export const AppsRoutes: Routes = [
         data: {
           title: 'Course Detail',
           urls: [
-            { title: 'Dashboard', url: '/dashboards/dashboard1' },
-            { title: 'Course Detail' },
+            {title: 'Dashboard', url: '/dashboards/dashboard1'},
+            {title: 'Course Detail'},
           ],
         },
       },
@@ -178,8 +179,8 @@ export const AppsRoutes: Routes = [
         data: {
           title: 'Posts',
           urls: [
-            { title: 'Dashboard', url: '/dashboards/dashboard1' },
-            { title: 'Posts' },
+            {title: 'Dashboard', url: '/dashboards/dashboard1'},
+            {title: 'Posts'},
           ],
         },
       },
@@ -189,19 +190,30 @@ export const AppsRoutes: Routes = [
         data: {
           title: 'Blog Detail',
           urls: [
-            { title: 'Dashboard', url: '/dashboards/dashboard1' },
-            { title: 'Blog Detail' },
+            {title: 'Dashboard', url: '/dashboards/dashboard1'},
+            {title: 'Blog Detail'},
           ],
         },
       },
       {
-        path: 'employee',
+        path: 'application',
+        component: AppApplicationComponent,
+        data: {
+          title: 'Application',
+          urls: [
+            {title: 'Dashboard', url: '/dashboards/dashboard1'},
+            {title: 'Application'},
+          ],
+        },
+      },
+      {
+        path: 'user',
         component: AppUserComponent,
         data: {
           title: 'User',
           urls: [
-            { title: 'Dashboard', url: '/dashboards/dashboard1' },
-            { title: 'User' },
+            {title: 'Dashboard', url: '/dashboards/dashboard1'},
+            {title: 'User'},
           ],
         },
       },
@@ -211,8 +223,8 @@ export const AppsRoutes: Routes = [
         data: {
           title: 'Invoice',
           urls: [
-            { title: 'Dashboard', url: '/dashboards/dashboard1' },
-            { title: 'Invoice' },
+            {title: 'Dashboard', url: '/dashboards/dashboard1'},
+            {title: 'Invoice'},
           ],
         },
       },
@@ -222,8 +234,8 @@ export const AppsRoutes: Routes = [
         data: {
           title: 'Add Invoice',
           urls: [
-            { title: 'Dashboard', url: '/dashboards/dashboard1' },
-            { title: 'Add Invoice' },
+            {title: 'Dashboard', url: '/dashboards/dashboard1'},
+            {title: 'Add Invoice'},
           ],
         },
       },
@@ -233,8 +245,8 @@ export const AppsRoutes: Routes = [
         data: {
           title: 'View Invoice',
           urls: [
-            { title: 'Dashboard', url: '/dashboards/dashboard1' },
-            { title: 'View Invoice' },
+            {title: 'Dashboard', url: '/dashboards/dashboard1'},
+            {title: 'View Invoice'},
           ],
         },
       },
@@ -244,8 +256,8 @@ export const AppsRoutes: Routes = [
         data: {
           title: 'Edit Invoice',
           urls: [
-            { title: 'Dashboard', url: '/dashboards/dashboard1' },
-            { title: 'Edit Invoice' },
+            {title: 'Dashboard', url: '/dashboards/dashboard1'},
+            {title: 'Edit Invoice'},
           ],
         },
       },

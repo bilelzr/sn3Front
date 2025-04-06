@@ -38,9 +38,9 @@ export const navItems: NavItem[] = [
     route: 'apps/kanban',
   },
   {
-    displayName: 'Contacts',
+    displayName: 'Collaborateur',
     iconName: 'phone',
-    route: 'apps/contacts',
+    route: 'apps/collaborateur',
   },
   {
     displayName: 'Contact List',
@@ -56,9 +56,14 @@ export const navItems: NavItem[] = [
     route: 'apps/courses',
   },
   {
-    displayName: 'Employee',
+    displayName: 'User',
     iconName: 'brand-ctemplar',
-    route: 'apps/employee',
+    route: 'apps/user',
+  },
+  {
+    displayName: 'Application',
+    iconName: 'brand-ctemplar',
+    route: 'apps/application',
   },
   {
     displayName: 'Notes',
